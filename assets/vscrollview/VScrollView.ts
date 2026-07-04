@@ -444,6 +444,12 @@ export class VirtualScrollView extends Component {
   public pixelAlign: boolean = true;
 
   @property({
+    displayName: '启用子项点击缩放效果',
+    tooltip: '开启后，点击子项时会显示缩放反馈（0.95 倍），关闭则不显示任何按下效果',
+  })
+  public enableItemClickEffect: boolean = true;
+
+  @property({
     displayName: '禁用越界滚动',
     tooltip: '是否禁用越界滚动（开启后将无法滚动到边界之外）',
   })
@@ -2394,7 +2400,7 @@ export class VirtualScrollView extends Component {
     let itemScript = node.getComponent(VScrollViewItem);
     if (!itemScript) itemScript = node.addComponent(VScrollViewItem);
     this._initSortLayerFlag ? itemScript.onSortLayer() : itemScript.offSortLayer();
-    itemScript.useItemClickEffect = this.onItemClickFn ? true : false;
+    itemScript.useItemClickEffect = this.enableItemClickEffect;
     if (!itemScript.onClickCallback) {
       itemScript.onClickCallback = (idx: number) => {
         if (this.onItemClickFn) this.onItemClickFn(node, idx);
